@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weight_tracker/helper_functions.dart';
 import 'package:weight_tracker/screens/authentication/sign_in.dart';
-import 'package:weight_tracker/screens/authentication/sign_in_success.dart';
 import 'package:weight_tracker/screens/homepage.dart';
 import 'package:weight_tracker/screens/user_details_register.dart';
 import 'package:weight_tracker/shared/theme_data.dart';

@@ -31,10 +31,18 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
       setState(() {
         isSubmitButtonPressed = true;
       });
+      var date = DateTime.parse(DateTime.now().toString());
+      print(date);
+
+      //To get the formatted date
+      var formattedDate = "${date.day}-${date.month}-${date.year}";
+      print(formattedDate);
       Map<String, dynamic> details = {
         'name': _nameController.text,
         'height': _heightController.text,
-        'weight': _weightController.text
+        'weight': [
+          {'weight': _weightController.text, 'time': formattedDate}
+        ]
       };
       databaseModel
           .uploadUserDetails(FirebaseAuth.instance.currentUser.uid, details)
@@ -112,7 +120,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
               style: trackerTheme(context).subtitle1.apply(
                   color: Colors.white, fontSizeDelta: 1.2, fontSizeFactor: 1),
               inputFormatters: [
-                WhitelistingTextInputFormatter(RegExp('[a-zA-Z0-9]')),
+                WhitelistingTextInputFormatter(RegExp('[a-zA-Z0-9 ]')),
               ],
               decoration: InputDecoration(
                 labelText: 'Name',

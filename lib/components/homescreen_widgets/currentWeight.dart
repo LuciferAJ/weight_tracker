@@ -20,12 +20,13 @@ Widget currentWeight(context) {
               return CircularProgressIndicator();
             } else if (snapshot.data['weight'].length > 0) {
               final userLatestWeight = double.parse(snapshot.data['weight']
-                  [snapshot.data['weight'].length - 1]['weight']);
+                      [snapshot.data['weight'].length - 1]['weight']
+                  .toString());
               final userLatestTime = snapshot.data['weight']
                   [snapshot.data['weight'].length - 1]['time'];
               return Container(
                 margin: symVerticalpx(10.0),
-                height: screenHeight(context) * 0.15,
+                // height: screenHeight(context) * 0.15,
                 decoration: BoxDecoration(
                     color: secondaryColor,
                     borderRadius: BorderRadius.circular(10)),
@@ -42,30 +43,36 @@ Widget currentWeight(context) {
                                   fontSizeDelta: 1.5,
                                   fontSizeFactor: 2),
                               children: <TextSpan>[
-                            TextSpan(
-                              text: ' Kgs',
-                              style: trackerTheme(context)
-                                  .headline6
-                                  .apply(color: Colors.white),
-                            )
-                          ])),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: symHorizontalpx(10.0),
-                            child: Icon(
-                              Icons.calendar_today,
-                              color: Colors.white38,
+                                TextSpan(
+                                  text: ' Kgs',
+                                  style: trackerTheme(context)
+                                      .headline6
+                                      .apply(color: Colors.white),
+                                )
+                              ])),
+                      Padding(
+                        padding: symVerticalpx(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: symHorizontalpx(10.0),
+                              child: Icon(
+                                Icons.calendar_today,
+                                color: Colors.white38,
+                              ),
                             ),
-                          ),
-                          Text(
-                            userLatestTime,
-                            style: trackerTheme(context)
-                                .headline6
-                                .apply(color: Colors.white38),
-                          ),
-                        ],
+                            Padding(
+                              padding: symHorizontalpx(10.0),
+                              child: Text(
+                                userLatestTime,
+                                style: trackerTheme(context)
+                                    .headline6
+                                    .apply(color: Colors.white38),
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),

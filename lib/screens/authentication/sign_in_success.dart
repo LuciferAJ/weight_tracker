@@ -20,17 +20,17 @@ class _SignInSuccessState extends State<SignInSuccess> {
 
   @override
   void initState() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    timer = Timer.periodic(Duration(milliseconds: 750), (timer) async {
       databaseModel
           .getUserDetailsStatus(FirebaseAuth.instance.currentUser.uid)
           .then((value) {
         if (value.data()['name'] != null) {
           HelperFunctions.userDetailsUploaded(true);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (BuildContext context) => HomePage()));
         } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => UserDetailsForm()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => UserDetailsForm()));
         }
       });
     });

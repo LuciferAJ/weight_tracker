@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:weight_tracker/components/authentication_screen_widgets/sign_in_image.dart';
 import 'package:weight_tracker/components/customButton.dart';
@@ -35,18 +36,21 @@ class _SignInState extends State<SignIn> {
       });
       _auth
           .signInWithEmailAndPassword(
-              _emailController.text, _passwordController.text)
+              _emailController.text.trim(), _passwordController.text.trim())
           .then((value) {
         if (value != null) {
           databaseModel.getUserDetailsStatus(value.uid).then((snapshot) {
             if (snapshot.data() != null) {
-              HelperFunctions.saveUserLoggedInSharedPreference(true);
-              Navigator.of(context)
-                  .pushReplacement(
-                      MaterialPageRoute(builder: (context) => SignInSuccess()))
-                  .whenComplete(() => setState(() {
-                        isSignInButtonPressed = false;
-                      }));
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                HelperFunctions.saveUserLoggedInSharedPreference(true);
+                Navigator.of(context)
+                    .pushReplacement(
+                    MaterialPageRoute(builder: (context) => SignInSuccess()))
+                    .whenComplete(() =>
+                    setState(() {
+                      isSignInButtonPressed = false;
+                    }));
+              });
             } else {
               databaseModel.setUser(value.uid, value.email).whenComplete(() {
                 HelperFunctions.saveUserLoggedInSharedPreference(true);
